@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>Map Demo</title>
+    <script src="../../lib/OpenLayers-2.12/OpenLayers.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript">
+ 
+        function init(){
+
+  var bounds = new OpenLayers.Bounds(
+                    -70042.0,6578602.0,851158.0,7903802.0
+                );
+				
+	var options = {
+                    maxExtent: bounds,
+                    projection: "EPSG:3067",
+					maxResolution: 2000,
+                    units: 'm'
+                };			
+					
+   var map = new OpenLayers.Map('map',options);
+   var suomi45m = new OpenLayers.Layer.WMS("NLS",
+        "http://localhost:8080/geoserver/wms?",
+        {layers: "nls:suomi45m_tm35fin", isBaseLayer: true, singleTile: true,
+	 maxExtent: bounds
+	});
+   
+   
+   map.addLayer(suomi45m);
+   map.setCenter(new OpenLayers.LonLat(385576, 6675364), 5);
+   map.addControl(new OpenLayers.Control.PanZoomBar());
+   map.addControl(new OpenLayers.Control.MousePosition());
+		        
+   geojson_layer = new OpenLayers.Layer.Vector("GeoJSON", {
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: "../../data/CapitalRegion.json",
+                format: new OpenLayers.Format.GeoJSON()
+            	})
+        	});
+   map.addLayer(geojson_layer);
+   }//end init
+    </script>
+  </head>
+   <body onload="init()">
+    <div id="map" class="smallmap"></div>
+
+  </body>
+</html>

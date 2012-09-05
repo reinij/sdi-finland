@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>Map Demo</title>
+    <script src="../../lib/OpenLayers-2.12/OpenLayers.js"></script>
+    <link rel="stylesheet" href="OpenlayersMap/style.css">
+     <script type="text/javascript">
+        var map, layer;
+        function init(){
+            map = new OpenLayers.Map( 'map');
+            layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
+            map.addLayer(layer);
+            map.setCenter(
+                new OpenLayers.LonLat(25.99, 63.22).transform(
+                    new OpenLayers.Projection("EPSG:4326"),
+                    map.getProjectionObject()
+                ), 6
+            );    
+        }
+    </script>
+  </head>
+   <body onload="init()">
+
+  <div id="map" class="smallmap"></div> 
+
+  </body>
+</html>

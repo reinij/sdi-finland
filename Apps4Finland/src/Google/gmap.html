@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Google Maps Example</title>
+ <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCyVtqZ5W_r6sbatannHGCdvkpRf7DYc_s&sensor=false">
+    </script>
+<script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(50.8419, 4.3773),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+            //map.setCenter(new google.maps.LatLng(60.1698799133,24.9384078979), 13);
+      }
+    </script>
+  </head>
+
+<body style="margin-left: 130px; width: 891px;" onload="initialize()">
+<span style="font-family: Arial; font-weight: bold;">Google MapsAPI Example<br><br></span>
+<span style="font-family: Arial;">Show map on your web page including map control and scale.<br><br></span>
+<span style="font-family: Arial; font-weight: bold;"></span><span style="font-family: Arial;">Source code</span>
+<span style="font-family: Arial; font-weight: bold;">:<br><br></span>
+<pre>
+&lt;script type=&quot;text/javascript&quot;
+      src=&quot;http://maps.googleapis.com/maps/api/js?key=AIzaSyCyVtqZ5W_r6sbatannHGCdvkpRf7DYc_s&amp;sensor=false&quot;&gt;
+    &lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(50.8419, 4.3773),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById(&quot;map&quot;),
+            mapOptions);
+      }
+    &lt;/script&gt;
+</pre>
+
+<div id="map" style="width: 500px; height: 300px;"></div></body></html>

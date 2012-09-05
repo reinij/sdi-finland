@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Geolocation and coordinate conversion</title>
+    </head>
+    
+	<script src="../../lib/proj4js/lib/proj4js-combined.js"></script>
+    <script type="text/javascript">
+	
+	function transform(lon,lat){
+	Proj4js.defs["EPSG:3067"] = "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
+	var source = new Proj4js.Proj('EPSG:4326');    //source coordinates will be in Longitude/Latitude
+	var dest_google = new Proj4js.Proj('EPSG:900913');     
+	var dest_finnish = new Proj4js.Proj('EPSG:3067');
+	var p = new Proj4js.Point(lon,lat);   //any object will do as long as it has 'x' and 'y' properties
+	var p2 = new Proj4js.Point(lon,lat);
+	Proj4js.transform(source, dest_google, p);      //do the transformation.  x and y are modified in place
+	document.getElementById("conversion_google").innerHTML = "In Google's coordsys </br>X is: " + p.x + 
+    				"</br> Y is: " + p.y;
+
+	Proj4js.transform(source, dest_finnish, p2);      //do the transformation.  x and y are modified in place
+	document.getElementById("conversion_fin").innerHTML = "In Finnish ETRS-TM35FIN coordsys </br>X is: " + p2.x + 
+    				"</br> Y is: " + p2.y;
+	}
+    </script>
+    <body>
+<center>
+<h2>Geolocation and coordinate transformation</h2>
+<a href="http://dev.w3.org/geo/api/spec-source.html">Geolocation API Specification</a></br>
+<a href="http://trac.osgeo.org/proj4js/">Proj4js JavaScript library to transform point coordinates</a>
+
+<script type="text/javascript">
+if ("geolocation" in navigator) {
+  /* geolocation is available */
+    document.write("<p> Location is supported in your browser.</p>");
+    navigator.geolocation.getCurrentPosition(function(position) {
+    document.getElementById("location").innerHTML = "Longitude is: " + position.coords.longitude + 
+    				"</br> Latitude is: " + position.coords.latitude +
+    				"</br> Accuracy is: " + position.coords.accuracy;
+transform(position.coords.longitude, position.coords.latitude);
+});
+} else {
+  document.write("I'm sorry, but geolocation services are not supported by your browser.");
+}
+
+</script>
+
+<div id="location"></div>
+</br>
+<div id="conversion_google"></div>
+</br>
+<div id="conversion_fin"></div>
+
+</body>
+</html>

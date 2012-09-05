@@ -1,0 +1,13 @@
+#map {
+	width: 512px;
+	height: 512px;
+	-moz-box-shadow: 0 0 4px #000030;
+	-webkit-box-shadow: 0 0 4px #000030;
+	box-shadow: 0 0 4px #000030;
+	margin-left: 8px;
+	display: inline;
+	float: left;
+}
+body {
+	font-family: Helvetica;
+}

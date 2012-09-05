@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WMTS lite</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"  />
+		<link rel="stylesheet" href="http://www.openlayers.org/api/theme/default/style.css"   type="text/css" />
+		<link rel="stylesheet" href="style.css"     type="text/css" />
+		<script src="proj4js-combined.js"></script>
+		<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+		<script src="WMTS_1_0_0_capabilities.js"></script>
+		<script src="WMTS_Layer.js"></script>
+		<script>
+			function init() {
+				Proj4js.defs["EPSG:3067"] = "+proj=utm +zone=35 +ellps=GRS80 +units=m +no_defs";
+
+				var map = new OpenLayers.Map({
+					units : "m",
+					allOverlays : true,
+					controls : [new OpenLayers.Control.TouchNavigation({
+						dragPanOptions : {
+							enableKinetic : true
+						}
+					}), new OpenLayers.Control.Zoom()],
+					projection : new OpenLayers.Projection("EPSG:3067"),
+					resolutions : [2000, 1000, 500, 200, 100, 50, 20, 10, 4, 2, 1], // 0.5, 0.25],
+					maxExtent : new OpenLayers.Bounds(0, 0, 10000000, 10000000)
+				});
+
+				var format = new WMTSFormatWithLimits();
+				format.initMapWithCaps(map, 'caps.xml', 'EPSG_3067_MML', function() {
+					/* note: this is an asynchronous call with a callback function */
+					map.render('map');
+					map.setCenter(new OpenLayers.LonLat(385576, 6675364), 4);
+				});
+			}
+		</script>
+	</head>
+	<body onload="init()">
+		<div id="map"></div>
+	</body>
+</html>

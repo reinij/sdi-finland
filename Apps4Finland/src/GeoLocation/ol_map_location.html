@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>Map Demo</title>
+    <script src="../../lib/OpenLayers-2.12/OpenLayers.js"></script>
+   	<script src="../../lib/proj4js/lib/proj4js-combined.js"></script>
+    <link rel="stylesheet" href="OpenlayersMap/style.css">
+     <script type="text/javascript">
+        
+        var map, layer;
+		
+        function init(){
+
+        map = new OpenLayers.Map('map');
+        layer= new OpenLayers.Layer.OSM("Simple OSM Map");
+        map.addLayer(layer);
+                        
+        navigator.geolocation.getCurrentPosition(function(position) {       
+            var lonLat = new OpenLayers.LonLat(position.coords.longitude,
+                                    position.coords.latitude)
+                      .transform(
+                                  new OpenLayers.Projection("EPSG:4326"), //transform from WGS84
+                                              map.getProjectionObject() //to Spherical Mercator Projection
+											  //in case of having NLS Finland background map
+											  //new OpenLayers.Projection("EPSG:3067")
+                                            );
+            
+			var size = new OpenLayers.Size(120,20);
+            var icon = new OpenLayers.Icon('http://apps4finland.fi/wp-content/themes/apps4/images/apps4-logo.jpg',size);			
+            marker.addMarker(new OpenLayers.Marker(lonLat, icon));
+            map.setCenter(lonLat, 15 ); //location and zoom level
+           
+        });
+        var marker = new OpenLayers.Layer.Markers( "Current Location" );
+        map.addLayer(marker);
+      }
+			
+    </script>
+  </head>
+   <body onload="init()">
+
+  <div id="map" class="smallmap"></div> 
+
+  </body>
+</html>
